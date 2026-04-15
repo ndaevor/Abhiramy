@@ -6,12 +6,13 @@
 
 <title>Wedding Invite</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&family=Cormorant+Garamond:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
     --green:#1f3d2b;
     --gold:#c5a059;
+    --light:#fdfaf5;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -19,18 +20,35 @@
 body{
     font-family:Montserrat;
     overflow:hidden;
+    background:var(--light);
 }
 
-/* ---------- OPEN ---------- */
+/* ---------- OPENING ---------- */
 .envelope{
     position:fixed;
     inset:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#fdfaf5;
+    background:var(--light);
     z-index:1000;
     cursor:pointer;
+    overflow:hidden;
+}
+
+/* glow effect */
+.envelope::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle, rgba(197,160,89,0.15), transparent 70%);
+    animation:glowMove 6s linear infinite;
+}
+
+@keyframes glowMove{
+    from{transform:translate(-30%, -30%);}
+    to{transform:translate(0%, 0%);}
 }
 
 .card{
@@ -39,19 +57,27 @@ body{
 }
 
 @keyframes fadeUp{
-    from{opacity:0; transform:translateY(40px);}
-    to{opacity:1;}
+    from{opacity:0; transform:translateY(40px) scale(0.95);}
+    to{opacity:1; transform:translateY(0) scale(1);}
 }
 
 .names{
     font-family:Playfair Display;
     color:var(--green);
+    letter-spacing:2px;
 }
 
+.invite{
+    font-family:Cormorant Garamond;
+    font-size:1.2rem;
+    letter-spacing:2px;
+}
+
+/* premium seal */
 .seal{
-    margin-top:20px;
-    width:70px;
-    height:70px;
+    margin-top:25px;
+    width:80px;
+    height:80px;
     border-radius:50%;
     background:var(--green);
     color:#fff;
@@ -59,11 +85,14 @@ body{
     align-items:center;
     justify-content:center;
     margin:auto;
+    letter-spacing:2px;
+    font-size:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
     animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
-    50%{transform:scale(1.1);}
+    50%{transform:scale(1.08);}
 }
 
 /* ---------- MAIN ---------- */
@@ -82,63 +111,104 @@ body{
     text-align:center;
     padding:20px;
     scroll-snap-align:start;
+}
+
+/* HERO */
+.hero{
+    background:url('anuchechi.jpeg') center/cover no-repeat;
     position:relative;
 }
 
-/* PARALLAX BG */
-.parallax{
-    background:url('anuchechi.jpeg') center/cover no-repeat;
-}
-
-.parallax::after{
+.hero::after{
     content:"";
     position:absolute;
     inset:0;
     background:rgba(0,0,0,0.6);
 }
 
-.content{
+.hero-content{
     position:relative;
     z-index:2;
     color:#fff;
 }
 
-/* TEXT ANIMATION */
-.reveal{
-    opacity:0;
-    transform:translateY(50px);
-    transition:1s ease;
-}
-
-.reveal.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* HERO TEXT */
 h1{
     font-family:Playfair Display;
-    font-size:clamp(2.5rem,8vw,4.5rem);
+    font-size:clamp(2.5rem,8vw,4rem);
+}
+
+.sub{
+    font-family:Cormorant Garamond;
+    font-size:1.2rem;
+    letter-spacing:2px;
+}
+
+/* ---------- PREMIUM CARD (NO BG IMAGE) ---------- */
+.card-box{
+    background:white;
+    padding:40px 25px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.08);
+    max-width:400px;
+}
+
+/* TITLE */
+.title{
+    font-family:Playfair Display;
+    font-size:2rem;
+    color:var(--green);
+}
+
+/* DIVIDER */
+.divider{
+    width:50px;
+    height:2px;
+    background:var(--gold);
+    margin:15px auto 25px;
 }
 
 /* COUNTDOWN */
 .countdown{
     display:flex;
-    gap:15px;
-    margin-top:20px;
+    gap:12px;
+    justify-content:center;
 }
 
 .box{
-    background:#fff;
     padding:15px;
-    color:#000;
+    border-radius:12px;
+    background:#fafafa;
+    min-width:70px;
 }
 
 .box span{
+    display:block;
+    font-size:22px;
+    font-weight:bold;
     color:var(--gold);
 }
 
-/* BUTTON */
+.box small{
+    font-size:10px;
+    letter-spacing:1px;
+}
+
+/* DETAILS */
+.detail{
+    font-family:Cormorant Garamond;
+    font-size:1.1rem;
+    margin:10px 0;
+    color:#444;
+}
+
+.quote{
+    margin-top:20px;
+    font-style:italic;
+    font-size:14px;
+    color:#777;
+}
+
+/* VENUE */
 .btn{
     margin-top:20px;
     padding:10px 20px;
@@ -147,38 +217,16 @@ h1{
     text-decoration:none;
 }
 
-/* SCROLL INDICATOR */
-.scroll-indicator{
-    position:absolute;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    color:#fff;
-    font-size:12px;
-    opacity:0.7;
-    animation:scrollAnim 2s infinite;
+/* ANIMATION */
+.reveal{
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s;
 }
 
-@keyframes scrollAnim{
-    0%{transform:translate(-50%,0);}
-    50%{transform:translate(-50%,10px);}
-    100%{transform:translate(-50%,0);}
-}
-
-/* PARTICLES */
-.particle{
-    position:absolute;
-    width:6px;
-    height:6px;
-    background:var(--gold);
-    border-radius:50%;
-    opacity:0.6;
-    animation:float 6s linear infinite;
-}
-
-@keyframes float{
-    from{transform:translateY(100vh);}
-    to{transform:translateY(-10vh);}
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 /* MOBILE */
@@ -193,61 +241,67 @@ h1{
 <!-- OPEN -->
 <div class="envelope" id="env" onclick="openCard()">
     <div class="card">
-        <p>You are invited</p>
+        <p class="invite">You are invited</p>
         <h2 class="names">Abhiramy & Parthasarathy</h2>
         <div class="seal">OPEN</div>
     </div>
 </div>
 
 <!-- MAIN -->
-<div class="main" id="main">
+<div class="main">
 
-    <!-- HERO -->
-    <section class="section parallax">
-        <div class="content">
-            <p class="reveal">We are getting married</p>
-            <h1 class="reveal">Abhiramy & Parthasarathy</h1>
-            <p class="reveal">May 24, 2026</p>
+<!-- HERO -->
+<section class="section hero">
+    <div class="hero-content">
+        <p class="sub reveal">We are getting married</p>
+        <h1 class="reveal">Abhiramy & Parthasarathy</h1>
+        <p class="sub reveal">May 24, 2026</p>
+    </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="section">
+    <div class="card-box reveal">
+        <h2 class="title">Counting Down</h2>
+        <div class="divider"></div>
+
+        <div class="countdown">
+            <div class="box"><span id="d"></span><small>Days</small></div>
+            <div class="box"><span id="h"></span><small>Hours</small></div>
+            <div class="box"><span id="m"></span><small>Mins</small></div>
+            <div class="box"><span id="s"></span><small>Secs</small></div>
         </div>
-        <div class="scroll-indicator">Scroll ↓</div>
-    </section>
+    </div>
+</section>
 
-    <!-- COUNTDOWN -->
-    <section class="section">
-        <div>
-            <h2 class="reveal">Countdown</h2>
-            <div class="countdown reveal">
-                <div class="box"><span id="d"></span><br>Days</div>
-                <div class="box"><span id="h"></span><br>Hours</div>
-                <div class="box"><span id="m"></span><br>Mins</div>
-                <div class="box"><span id="s"></span><br>Secs</div>
-            </div>
-        </div>
-    </section>
+<!-- DETAILS -->
+<section class="section">
+    <div class="card-box reveal">
+        <h2 class="title">Wedding Details</h2>
+        <div class="divider"></div>
 
-    <!-- DETAILS -->
-    <section class="section">
-        <div class="reveal">
-            <h2>Wedding Details</h2>
-            <p>Date: May 24, 2026</p>
-            <p>Muhurtham: 12:00 PM - 12:26 PM</p>
-        </div>
-    </section>
+        <p class="detail">📅 May 24, 2026</p>
+        <p class="detail">🕛 Muhurtham: 12:00 PM – 12:26 PM</p>
 
-    <!-- VENUE -->
-    <section class="section parallax">
-        <div class="content reveal">
-            <h2>Venue</h2>
-            <p><b>SNDP Hall, Mamangalam</b></p>
-            <p>Kochi, Kerala</p>
-		<br>
+        
+    </div>
+</section>
 
-            <a class="btn" target="_blank"
-            href="https://maps.app.goo.gl/kzu77k8YmkibRwcp6">
-            View Location
-            </a>
-        </div>
-    </section>
+<!-- VENUE -->
+<section class="section">
+    <div class="card-box reveal">
+        <h2 class="title">Venue</h2>
+        <div class="divider"></div>
+
+        <p class="detail"><b>SNDP Hall, Mamangalam</b></p>
+        <p class="detail">Kochi, Kerala</p>
+
+        <a class="btn" target="_blank"
+        href="https://maps.app.goo.gl/kzu77k8YmkibRwcp6">
+        View Location
+        </a>
+    </div>
+</section>
 
 </div>
 
@@ -255,14 +309,16 @@ h1{
 
 // OPEN
 function openCard(){
-    document.getElementById("env").style.opacity="0";
+    const env=document.getElementById("env");
+
+    env.style.transition="1s";
+    env.style.opacity="0";
+    env.style.transform="scale(1.1)";
 
     setTimeout(()=>{
-        document.getElementById("env").style.display="none";
+        env.style.display="none";
         document.body.style.overflow="hidden";
-    },800);
-
-    startParticles();
+    },1000);
 }
 
 // COUNTDOWN
@@ -278,31 +334,16 @@ setInterval(()=>{
     document.getElementById("s").innerText = Math.floor((diff%(1000*60))/1000);
 },1000);
 
-// SCROLL REVEAL
-const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add("show");
+// SCROLL ANIMATION
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+        if(e.isIntersecting){
+            e.target.classList.add("show");
         }
     });
 });
 
-document.querySelectorAll(".reveal").forEach(el=>{
-    observer.observe(el);
-});
-
-// PARTICLES
-function startParticles(){
-    setInterval(()=>{
-        let p=document.createElement("div");
-        p.className="particle";
-        p.style.left=Math.random()*100+"%";
-        p.style.animationDuration=(4+Math.random()*4)+"s";
-        document.body.appendChild(p);
-
-        setTimeout(()=>p.remove(),8000);
-    },300);
-}
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
 </script>
 
